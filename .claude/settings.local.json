@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Copy-Item \"E:\\\\FREELANCED PROJECTS\\\\RealEsate-site\\\\app\\\\public\\\\images\" \"E:\\\\FREELANCED PROJECTS\\\\RealEsate-site\\\\public\\\\images\" -Recurse -Force)",
+      "PowerShell(Copy-Item \"E:\\\\FREELANCED PROJECTS\\\\RealEsate-site\\\\app\\\\public\\\\videos\" \"E:\\\\FREELANCED PROJECTS\\\\RealEsate-site\\\\public\\\\videos\" -Recurse -Force)"
+    ]
+  }
+}
