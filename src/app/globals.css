@@ -38,8 +38,8 @@ html.lenis, html.lenis body {
     --border-medium: rgba(0, 0, 0, 0.1);
     --border-subtle: rgba(0, 0, 0, 0.04);
     --border-default: rgba(0, 0, 0, 0.08);
-    --text-secondary: #6E6E6E;
-    --text-tertiary: #999999;
+    --text-secondary: #555555;
+    --text-tertiary: #777777;
   }
 
   .dark {
@@ -204,4 +204,17 @@ html.lenis, html.lenis body {
   .marquee-track {
     animation: none !important;
   }
+}
+
+/* Screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }

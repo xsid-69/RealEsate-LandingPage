@@ -59,19 +59,19 @@ export default function VideoTour() {
 
             {/* Play button */}
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="relative cursor-pointer">
+              <button className="relative cursor-pointer bg-transparent border-none p-0" aria-label="Play virtual tour video">
                 {/* Pulse rings */}
-                <div className="absolute inset-0 rounded-full border border-white/20 scale-100 group-hover:scale-150 group-hover:opacity-0 transition-all duration-1000" />
-                <div className="absolute inset-0 rounded-full border border-white/10 scale-100 group-hover:scale-[1.8] group-hover:opacity-0 transition-all duration-1000 delay-200" />
+                <div className="absolute inset-0 rounded-full border border-white/20 scale-100 group-hover:scale-150 group-hover:opacity-0 transition-all duration-1000" aria-hidden="true" />
+                <div className="absolute inset-0 rounded-full border border-white/10 scale-100 group-hover:scale-[1.8] group-hover:opacity-0 transition-all duration-1000 delay-200" aria-hidden="true" />
                 {/* Rotating outer ring */}
-                <div className="absolute -inset-4 rounded-full border border-dashed border-white/10 animate-[spin_20s_linear_infinite]" />
-                {/* Button */}
+                <div className="absolute -inset-4 rounded-full border border-dashed border-white/10 animate-[spin_20s_linear_infinite]" aria-hidden="true" />
+                {/* Button visual */}
                 <div className="relative w-16 h-16 lg:w-20 lg:h-20 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 group-hover:scale-110 group-hover:bg-[var(--brand)] group-hover:border-[var(--brand)] group-hover:shadow-[0_0_40px_rgba(196,164,78,0.4)] transition-all duration-500">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="white" className="ml-1">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="white" className="ml-1" aria-hidden="true">
                     <polygon points="5 3 19 12 5 21 5 3" />
                   </svg>
                 </div>
-              </div>
+              </button>
             </div>
 
             {/* Frame border */}

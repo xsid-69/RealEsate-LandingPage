@@ -148,24 +148,25 @@ export default function Hero() {
 
         {/* Search Bar - hidden on mobile */}
         <div className="hero-search hidden md:block">
-          <div className="flex items-center bg-white/[0.06] backdrop-blur-xl border border-white/[0.08] rounded-sm overflow-hidden max-w-2xl hover:bg-white/[0.09] hover:border-white/[0.12] transition-all duration-500">
+          <form role="search" aria-label="Property search" className="flex items-center bg-white/[0.06] backdrop-blur-xl border border-white/[0.08] rounded-sm overflow-hidden max-w-2xl hover:bg-white/[0.09] hover:border-white/[0.12] transition-all duration-500">
             <div className="flex-1 flex items-center gap-4 px-6 py-4">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" className="opacity-40 flex-shrink-0">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" className="opacity-40 flex-shrink-0" aria-hidden="true">
                 <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
               </svg>
+              <label htmlFor="hero-search" className="sr-only">Search properties</label>
               <input
+                id="hero-search"
                 type="text"
                 placeholder="Search by locality, project, or builder..."
                 className="bg-transparent text-white placeholder-white/30 text-[14px] font-body w-full outline-none"
-                aria-label="Search properties"
               />
             </div>
             <MagneticButton strength={0.2}>
-              <button className="bg-[var(--brand)] hover:bg-[var(--brand-light)] text-white px-7 py-4 text-[11px] uppercase tracking-[2px] font-medium font-body transition-all duration-400 hover:shadow-[0_0_30px_rgba(196,164,78,0.3)]">
+              <button type="submit" className="bg-[var(--brand)] hover:bg-[var(--brand-light)] text-white px-7 py-4 text-[11px] uppercase tracking-[2px] font-medium font-body transition-all duration-400 hover:shadow-[0_0_30px_rgba(196,164,78,0.3)]" aria-label="Search properties">
                 Search
               </button>
             </MagneticButton>
-          </div>
+          </form>
         </div>
       </div>
 

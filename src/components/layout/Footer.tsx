@@ -41,7 +41,7 @@ export default function Footer() {
   };
 
   return (
-    <footer ref={sectionRef} className="bg-[var(--surface-dark)] text-white pt-20 pb-8 px-6 lg:px-16 border-t border-white/[0.04]">
+    <footer ref={sectionRef} className="bg-[var(--surface-dark)] text-white pt-20 pb-8 px-6 lg:px-16 border-t border-white/[0.04]" role="contentinfo">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
           {/* Brand */}
@@ -93,8 +93,10 @@ export default function Footer() {
             <p className="text-white/30 text-[13px] mb-4 leading-[1.7] font-body">
               New listings and market insights, no spam.
             </p>
-            <form onSubmit={handleSubmit} className="flex">
+            <form onSubmit={handleSubmit} className="flex" aria-label="Newsletter subscription">
+              <label htmlFor="newsletter-email" className="sr-only">Email address for newsletter</label>
               <input
+                id="newsletter-email"
                 type="email"
                 placeholder="Email"
                 value={email}
@@ -120,11 +122,11 @@ export default function Footer() {
           <p className="text-white/20 text-[11px] font-body">
             &copy; 2024 Nestara Realty Pune. RERA Registered.
           </p>
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-6" role="navigation" aria-label="Legal links">
             {['Privacy', 'Terms', 'RERA'].map((link) => (
               <a
                 key={link}
-                href="#"
+                href={`/${link.toLowerCase()}`}
                 className="text-white/20 text-[11px] transition-colors duration-300 hover:text-white/50 font-body"
               >
                 {link}

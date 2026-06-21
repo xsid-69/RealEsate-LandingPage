@@ -92,61 +92,82 @@ export default function Contact() {
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="contact-form flex flex-col gap-4">
+        <form onSubmit={handleSubmit} className="contact-form flex flex-col gap-4" aria-label="Contact form">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label htmlFor="contact-name" className="sr-only">Your name</label>
+              <input
+                id="contact-name"
+                type="text"
+                placeholder="Your name"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                onFocus={() => setFocused('name')}
+                onBlur={() => setFocused(null)}
+                className={inputClasses('name')}
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="contact-phone" className="sr-only">Phone number</label>
+              <input
+                id="contact-phone"
+                type="tel"
+                placeholder="Phone number"
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                onFocus={() => setFocused('phone')}
+                onBlur={() => setFocused(null)}
+                className={inputClasses('phone')}
+              />
+            </div>
+          </div>
+          <div>
+            <label htmlFor="contact-email" className="sr-only">Email address</label>
             <input
-              type="text"
-              placeholder="Your name"
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              onFocus={() => setFocused('name')}
+              id="contact-email"
+              type="email"
+              placeholder="Email address"
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              onFocus={() => setFocused('email')}
               onBlur={() => setFocused(null)}
-              className={inputClasses('name')}
+              className={inputClasses('email')}
               required
             />
-            <input
-              type="tel"
-              placeholder="Phone number"
-              value={formData.phone}
-              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-              onFocus={() => setFocused('phone')}
+          </div>
+          <div>
+            <label htmlFor="contact-property" className="sr-only">Property type</label>
+            <select
+              id="contact-property"
+              value={formData.property}
+              onChange={(e) => setFormData({ ...formData, property: e.target.value })}
+              onFocus={() => setFocused('property')}
               onBlur={() => setFocused(null)}
-              className={inputClasses('phone')}
+              className={inputClasses('property')}
+              aria-label="Select property type"
+            >
+              <option value="">Property type</option>
+              <option value="apartment">Apartment</option>
+              <option value="villa">Villa</option>
+              <option value="penthouse">Penthouse</option>
+              <option value="plot">Plot</option>
+              <option value="commercial">Commercial</option>
+            </select>
+          </div>
+          <div>
+            <label htmlFor="contact-message" className="sr-only">Message</label>
+            <textarea
+              id="contact-message"
+              placeholder="Tell us what you're looking for..."
+              value={formData.message}
+              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+              onFocus={() => setFocused('message')}
+              onBlur={() => setFocused(null)}
+              className={`${inputClasses('message')} resize-none h-32`}
+              rows={4}
             />
           </div>
-          <input
-            type="email"
-            placeholder="Email address"
-            value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            onFocus={() => setFocused('email')}
-            onBlur={() => setFocused(null)}
-            className={inputClasses('email')}
-            required
-          />
-          <select
-            value={formData.property}
-            onChange={(e) => setFormData({ ...formData, property: e.target.value })}
-            onFocus={() => setFocused('property')}
-            onBlur={() => setFocused(null)}
-            className={inputClasses('property')}
-          >
-            <option value="">Property type</option>
-            <option value="apartment">Apartment</option>
-            <option value="villa">Villa</option>
-            <option value="penthouse">Penthouse</option>
-            <option value="plot">Plot</option>
-            <option value="commercial">Commercial</option>
-          </select>
-          <textarea
-            placeholder="Tell us what you're looking for..."
-            value={formData.message}
-            onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-            onFocus={() => setFocused('message')}
-            onBlur={() => setFocused(null)}
-            className={`${inputClasses('message')} resize-none h-32`}
-            rows={4}
-          />
           <div className="mt-2">
             <MagneticButton strength={0.15}>
               <button type="submit" className="btn-primary rounded-sm w-full sm:w-auto justify-center group/btn relative overflow-hidden">
