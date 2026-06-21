@@ -166,6 +166,6 @@ I build premium, high-performance websites for businesses that want to stand out
 
 **⭐ Star this repo if you found it useful!**
 
-Built with precision by [Siddhant](https://wa.me/919356851770) • 2024
+Built with precision by [Siddhant](https://wa.me/919356851770) • 2026
 
 </div>
