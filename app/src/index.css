@@ -1,0 +1,190 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Lenis smooth scroll */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+    --ink: #0F0F0F;
+    --ink-soft: #2A2A2A;
+    --ink-muted: #5A5A5A;
+    --surface: #FFFFFF;
+    --surface-alt: #F7F6F4;
+    --surface-warm: #F9F7F4;
+    --surface-elevated: #FAFAFA;
+    --surface-dark: #0F0F0F;
+    --surface-dark-alt: #1A1A1A;
+    --brand: #8B6914;
+    --brand-light: #C4A44E;
+    --brand-soft: #F5EFD7;
+    --border-light: rgba(0, 0, 0, 0.06);
+    --border-medium: rgba(0, 0, 0, 0.1);
+    --border-subtle: rgba(0, 0, 0, 0.04);
+    --border-default: rgba(0, 0, 0, 0.08);
+    --text-secondary: #6E6E6E;
+    --text-tertiary: #999999;
+  }
+
+  .dark {
+    color-scheme: dark;
+    --ink: #F5F5F5;
+    --ink-soft: #E0E0E0;
+    --ink-muted: #A0A0A0;
+    --surface: #0A0A0A;
+    --surface-alt: #111111;
+    --surface-warm: #0F0F0E;
+    --surface-elevated: #151515;
+    --surface-dark: #000000;
+    --surface-dark-alt: #050505;
+    --brand: #C4A44E;
+    --brand-light: #D4B968;
+    --brand-soft: #1C1708;
+    --border-light: rgba(255, 255, 255, 0.06);
+    --border-medium: rgba(255, 255, 255, 0.1);
+    --border-subtle: rgba(255, 255, 255, 0.04);
+    --border-default: rgba(255, 255, 255, 0.08);
+    --text-secondary: #A0A0A0;
+    --text-tertiary: #707070;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Hanken Grotesk', -apple-system, sans-serif;
+    background-color: var(--surface);
+    color: var(--ink);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 16px;
+    line-height: 1.6;
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cinzel', serif;
+    font-weight: 400;
+    text-wrap: balance;
+    letter-spacing: -0.01em;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  img {
+    content-visibility: auto;
+  }
+
+  /* Focus visible for accessibility */
+  :focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+  }
+
+  /* Better tap targets on mobile */
+  @media (max-width: 768px) {
+    button, a, select {
+      min-height: 44px;
+      min-width: 44px;
+    }
+  }
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--brand);
+  border-radius: 10px;
+}
+
+/* ===== BUTTONS ===== */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--brand);
+  color: white;
+  padding: 15px 30px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none;
+  font-family: 'Hanken Grotesk', sans-serif;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(139, 105, 20, 0.3);
+}
+
+/* ===== MARQUEE ===== */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  animation: marquee 30s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .marquee-track {
+    animation: none !important;
+  }
+}
+
+/* ===== PRELOADER ===== */
+@keyframes load {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+/* ===== CURSOR ===== */
+@media (min-width: 1024px) and (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
+}
