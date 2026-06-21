@@ -20,21 +20,9 @@
 
 <div align="center">
 
-| Desktop | Mobile |
-|---------|--------|
-| ![Desktop Hero](https://via.placeholder.com/600x340/0A0A0A/C4A44E?text=Hero+Section) | ![Mobile View](https://via.placeholder.com/280x500/0A0A0A/C4A44E?text=Mobile+View) |
-
-| Dark Mode | Light Mode |
-|-----------|------------|
-| ![Dark Mode](https://via.placeholder.com/600x340/0A0A0A/C4A44E?text=Dark+Mode) | ![Light Mode](https://via.placeholder.com/600x340/FFFFFF/8B6914?text=Light+Mode) |
-
-| Properties | Contact |
-|-----------|---------|
-| ![Properties](https://via.placeholder.com/600x340/0A0A0A/C4A44E?text=Properties+Grid) | ![Contact](https://via.placeholder.com/600x340/0A0A0A/C4A44E?text=Contact+Form) |
+![Nestara Realty — Hero Section](preview.png)
 
 </div>
-
-> Replace placeholder images with actual screenshots of your deployed site.
 
 ---
 

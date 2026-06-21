@@ -8,6 +8,10 @@ export const metadata: Metadata = {
   description: 'Premium real estate advisory in Pune. Curated luxury homes, villas, and apartments in Koregaon Park, Kalyani Nagar, and Baner.',
   keywords: ['real estate pune', 'luxury homes pune', 'premium apartments pune', 'koregaon park homes', 'nestara realty'],
   authors: [{ name: 'Nestara Realty' }],
+  icons: {
+    icon: '/icon.svg',
+    apple: '/apple-icon.svg',
+  },
   openGraph: {
     title: 'Nestara Realty | Premium Real Estate in Pune',
     description: 'Premium real estate advisory in Pune. Finding homes that feel like they were always yours.',
