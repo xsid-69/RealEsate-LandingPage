@@ -21,28 +21,39 @@ export default function Neighbourhoods() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const ctx = gsap.context(() => {
+      // Header with staggered blur reveal
       gsap.fromTo('.neigh-header > *',
-        { y: 50, opacity: 0 },
-        { y: 0, opacity: 1, stagger: 0.1, duration: 1, ease: 'expo.out',
-          scrollTrigger: { trigger: '.neigh-header', start: 'top 80%' } }
+        { y: 60, opacity: 0, filter: 'blur(8px)' },
+        { y: 0, opacity: 1, filter: 'blur(0px)', stagger: 0.1, duration: 1.3, ease: 'expo.out',
+          scrollTrigger: { trigger: '.neigh-header', start: 'top 82%' } }
       );
 
-      gsap.fromTo('.neigh-card',
-        { y: 80, opacity: 0, scale: 0.93 },
-        { y: 0, opacity: 1, scale: 1, stagger: 0.1, duration: 1.2, ease: 'expo.out',
-          scrollTrigger: { trigger: '.neigh-grid', start: 'top 80%' } }
-      );
+      // Cards stagger in from alternating sides
+      document.querySelectorAll('.neigh-card').forEach((card, i) => {
+        gsap.fromTo(card,
+          { y: 100, x: i % 2 === 0 ? -40 : 40, opacity: 0, scale: 0.92, rotateY: i % 2 === 0 ? -8 : 8 },
+          { y: 0, x: 0, opacity: 1, scale: 1, rotateY: 0, duration: 1.4, ease: 'expo.out',
+            scrollTrigger: { trigger: card, start: 'top 88%' } }
+        );
+      });
 
       // Inner parallax on each card image
       document.querySelectorAll('.neigh-card').forEach((card) => {
         const img = card.querySelector('.neigh-img');
         if (img) {
-          gsap.fromTo(img, { yPercent: -8 }, {
-            yPercent: 8, ease: 'none',
-            scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: true },
+          gsap.fromTo(img, { yPercent: -12 }, {
+            yPercent: 12, ease: 'none',
+            scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: 0.5 },
           });
         }
       });
+
+      // Reveal line under header
+      gsap.fromTo('.neigh-reveal-line',
+        { scaleX: 0 },
+        { scaleX: 1, duration: 1.5, ease: 'expo.inOut',
+          scrollTrigger: { trigger: '.neigh-header', start: 'top 78%' } }
+      );
     }, sectionRef.current);
 
     return () => ctx.revert();
@@ -58,6 +69,7 @@ export default function Neighbourhoods() {
           <TextReveal as="h2" className="text-[clamp(32px,5vw,52px)] font-cinzel text-[var(--ink)] leading-[1.1]">
             Pune&apos;s most coveted addresses
           </TextReveal>
+          <div className="neigh-reveal-line mt-6 h-[1px] w-full max-w-xs bg-gradient-to-r from-[var(--brand)] to-transparent origin-left" />
         </div>
 
         <div className="neigh-grid grid grid-cols-1 md:grid-cols-2 gap-5">

@@ -19,28 +19,40 @@ export default function Team() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const ctx = gsap.context(() => {
+      // Header with blur reveal
       gsap.fromTo('.team-header > *',
-        { y: 50, opacity: 0 },
-        { y: 0, opacity: 1, stagger: 0.1, duration: 1, ease: 'expo.out',
-          scrollTrigger: { trigger: '.team-header', start: 'top 80%' } }
+        { y: 50, opacity: 0, filter: 'blur(6px)' },
+        { y: 0, opacity: 1, filter: 'blur(0px)', stagger: 0.1, duration: 1.2, ease: 'expo.out',
+          scrollTrigger: { trigger: '.team-header', start: 'top 82%' } }
       );
 
-      gsap.fromTo('.team-member',
-        { y: 80, opacity: 0, scale: 0.95 },
-        { y: 0, opacity: 1, scale: 1, stagger: 0.12, duration: 1.2, ease: 'expo.out',
-          scrollTrigger: { trigger: '.team-grid', start: 'top 80%' } }
-      );
+      // Team members stagger in with scale and rotation
+      document.querySelectorAll('.team-member').forEach((member, i) => {
+        gsap.fromTo(member,
+          { y: 100, opacity: 0, scale: 0.9, rotateY: i % 2 === 0 ? -10 : 10 },
+          { y: 0, opacity: 1, scale: 1, rotateY: 0, duration: 1.4, ease: 'expo.out',
+            delay: i * 0.1,
+            scrollTrigger: { trigger: member, start: 'top 88%' } }
+        );
+      });
 
       // Parallax within team images
       document.querySelectorAll('.team-member').forEach((member) => {
         const img = member.querySelector('.team-img');
         if (img) {
-          gsap.fromTo(img, { yPercent: -5 }, {
-            yPercent: 5, ease: 'none',
-            scrollTrigger: { trigger: member, start: 'top bottom', end: 'bottom top', scrub: true },
+          gsap.fromTo(img, { yPercent: -8 }, {
+            yPercent: 8, ease: 'none',
+            scrollTrigger: { trigger: member, start: 'top bottom', end: 'bottom top', scrub: 0.5 },
           });
         }
       });
+
+      // Role badges elastic entrance
+      gsap.fromTo('.team-role-badge',
+        { scale: 0, opacity: 0 },
+        { scale: 1, opacity: 1, stagger: 0.15, duration: 0.8, ease: 'elastic.out(1, 0.6)',
+          scrollTrigger: { trigger: '.team-grid', start: 'top 60%' } }
+      );
     }, sectionRef.current);
 
     return () => ctx.revert();
@@ -81,7 +93,7 @@ export default function Team() {
 
                 {/* Role badge - slides from left */}
                 <div className="absolute bottom-5 left-5 translate-x-[-20px] opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-600 ease-expo-out">
-                  <span className="text-[10px] uppercase tracking-[2px] font-medium font-body bg-[var(--brand)]/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-sm">
+                  <span className="team-role-badge text-[10px] uppercase tracking-[2px] font-medium font-body bg-[var(--brand)]/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-sm">
                     {member.role}
                   </span>
                 </div>

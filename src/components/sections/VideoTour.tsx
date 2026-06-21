@@ -20,23 +20,38 @@ export default function VideoTour() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const ctx = gsap.context(() => {
+      // Content slides from right with blur
       gsap.fromTo('.video-content > *',
-        { y: 50, opacity: 0 },
-        { y: 0, opacity: 1, stagger: 0.12, duration: 1, ease: 'expo.out',
-          scrollTrigger: { trigger: '.video-content', start: 'top 75%' } }
+        { x: 50, opacity: 0, filter: 'blur(6px)' },
+        { x: 0, opacity: 1, filter: 'blur(0px)', stagger: 0.1, duration: 1.2, ease: 'expo.out',
+          scrollTrigger: { trigger: '.video-content', start: 'top 78%' } }
       );
 
+      // Video frame scales up with rotation
       gsap.fromTo('.video-frame',
-        { scale: 0.94, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 1.4, ease: 'expo.out',
-          scrollTrigger: { trigger: '.video-frame', start: 'top 80%' } }
+        { scale: 0.88, opacity: 0, rotateY: -8 },
+        { scale: 1, opacity: 1, rotateY: 0, duration: 1.6, ease: 'expo.out',
+          scrollTrigger: { trigger: '.video-frame', start: 'top 82%' } }
       );
+
+      // Parallax on video frame
+      gsap.to('.video-frame', {
+        yPercent: -5, ease: 'none',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top bottom', end: 'bottom top', scrub: 0.6 },
+      });
 
       // Slow Ken Burns on the video thumbnail
       gsap.to('.video-image', {
-        scale: 1.05, xPercent: 2,
+        scale: 1.08, xPercent: 3,
         duration: 20, ease: 'none', repeat: -1, yoyo: true,
       });
+
+      // Feature items stagger
+      gsap.fromTo('.video-feat',
+        { x: 30, opacity: 0 },
+        { x: 0, opacity: 1, stagger: 0.1, duration: 0.9, ease: 'power3.out',
+          scrollTrigger: { trigger: '.video-content', start: 'top 65%' } }
+      );
     }, sectionRef.current);
 
     return () => ctx.revert();
@@ -97,7 +112,7 @@ export default function VideoTour() {
           {/* Features */}
           <div className="flex flex-col gap-4 mt-4">
             {FEATURES.map((feat, idx) => (
-              <div key={idx} className="group/feat flex items-center gap-4 p-3 rounded-sm hover:bg-[var(--surface-alt)] transition-all duration-400">
+              <div key={idx} className="video-feat group/feat flex items-center gap-4 p-3 rounded-sm hover:bg-[var(--surface-alt)] transition-all duration-400">
                 <div className="w-11 h-11 rounded-sm bg-[var(--brand-soft)] border border-[var(--border-subtle)] flex items-center justify-center text-[14px] group-hover/feat:scale-110 group-hover/feat:border-[var(--brand)]/30 transition-all duration-400">
                   {feat.icon}
                 </div>

@@ -22,23 +22,32 @@ export default function Awards() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const ctx = gsap.context(() => {
+      // Header with blur reveal
       gsap.fromTo('.awards-header > *',
-        { y: 40, opacity: 0 },
-        { y: 0, opacity: 1, stagger: 0.1, duration: 1, ease: 'expo.out',
-          scrollTrigger: { trigger: '.awards-header', start: 'top 80%' } }
+        { y: 50, opacity: 0, filter: 'blur(6px)' },
+        { y: 0, opacity: 1, filter: 'blur(0px)', stagger: 0.1, duration: 1.2, ease: 'expo.out',
+          scrollTrigger: { trigger: '.awards-header', start: 'top 82%' } }
       );
 
+      // Award items cascade with 3D flip
       gsap.fromTo('.award-item',
-        { y: 30, opacity: 0 },
-        { y: 0, opacity: 1, stagger: 0.08, duration: 0.9, ease: 'expo.out',
-          scrollTrigger: { trigger: '.awards-grid', start: 'top 80%' } }
+        { y: 50, opacity: 0, rotateX: 15, scale: 0.9 },
+        { y: 0, opacity: 1, rotateX: 0, scale: 1, stagger: 0.1, duration: 1.1, ease: 'back.out(1.5)',
+          scrollTrigger: { trigger: '.awards-grid', start: 'top 82%' } }
       );
 
+      // Partners section fades up
       gsap.fromTo('.partners-section',
-        { opacity: 0 },
-        { opacity: 1, duration: 1.2,
-          scrollTrigger: { trigger: '.partners-section', start: 'top 85%' } }
+        { y: 30, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.4, ease: 'expo.out',
+          scrollTrigger: { trigger: '.partners-section', start: 'top 88%' } }
       );
+
+      // Parallax on entire section
+      gsap.to('.awards-grid', {
+        yPercent: -3, ease: 'none',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top bottom', end: 'bottom top', scrub: 0.5 },
+      });
     }, sectionRef.current);
 
     return () => ctx.revert();

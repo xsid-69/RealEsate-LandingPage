@@ -53,16 +53,36 @@ export default function Properties() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const ctx = gsap.context(() => {
+      // Header slides in with blur reveal
       gsap.fromTo('.prop-header > *',
-        { y: 50, opacity: 0 },
-        { y: 0, opacity: 1, stagger: 0.12, duration: 1.1, ease: 'expo.out',
-          scrollTrigger: { trigger: '.prop-header', start: 'top 80%' } }
+        { y: 60, opacity: 0, filter: 'blur(8px)' },
+        { y: 0, opacity: 1, filter: 'blur(0px)', stagger: 0.1, duration: 1.3, ease: 'expo.out',
+          scrollTrigger: { trigger: '.prop-header', start: 'top 82%' } }
       );
 
+      // Cards cascade in with stagger and rotation
       gsap.fromTo('.prop-card',
-        { y: 100, opacity: 0, scale: 0.94 },
-        { y: 0, opacity: 1, scale: 1, stagger: 0.12, duration: 1.2, ease: 'expo.out',
-          scrollTrigger: { trigger: '.prop-grid', start: 'top 80%' } }
+        { y: 120, opacity: 0, scale: 0.9, rotateX: 8 },
+        { y: 0, opacity: 1, scale: 1, rotateX: 0, stagger: 0.15, duration: 1.4, ease: 'expo.out',
+          scrollTrigger: { trigger: '.prop-grid', start: 'top 85%' } }
+      );
+
+      // Each card image has parallax
+      document.querySelectorAll('.prop-card').forEach((card) => {
+        const img = card.querySelector('img');
+        if (img) {
+          gsap.fromTo(img, { yPercent: -10 }, {
+            yPercent: 10, ease: 'none',
+            scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: 0.6 },
+          });
+        }
+      });
+
+      // Horizontal scroll reveal line
+      gsap.fromTo('.prop-reveal-line',
+        { scaleX: 0 },
+        { scaleX: 1, duration: 1.5, ease: 'expo.inOut',
+          scrollTrigger: { trigger: '.prop-header', start: 'top 80%' } }
       );
     }, sectionRef.current);
 
@@ -80,6 +100,7 @@ export default function Properties() {
           <TextReveal as="h2" className="text-[clamp(32px,5vw,52px)] font-cinzel text-[var(--ink)] leading-[1.1] max-w-2xl">
             Handpicked residences in Pune&apos;s finest locales
           </TextReveal>
+          <div className="prop-reveal-line mt-6 h-[1px] w-full max-w-xs bg-gradient-to-r from-[var(--brand)] to-transparent origin-left" />
         </div>
 
         {/* Grid */}

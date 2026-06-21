@@ -19,26 +19,29 @@ export default function Process() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const ctx = gsap.context(() => {
-      // Header
+      // Header with blur reveal
       gsap.fromTo('.process-header > *',
-        { y: 50, opacity: 0 },
-        { y: 0, opacity: 1, stagger: 0.1, duration: 1, ease: 'expo.out',
+        { y: 60, opacity: 0, filter: 'blur(8px)' },
+        { y: 0, opacity: 1, filter: 'blur(0px)', stagger: 0.1, duration: 1.2, ease: 'expo.out',
           scrollTrigger: { trigger: '.process-header', start: 'top 80%' } }
       );
 
-      // Steps stagger
-      gsap.fromTo('.process-step',
-        { x: -40, opacity: 0 },
-        { x: 0, opacity: 1, stagger: 0.15, duration: 1, ease: 'expo.out',
-          scrollTrigger: { trigger: '.process-steps', start: 'top 75%' } }
-      );
+      // Steps stagger from left with rotation
+      document.querySelectorAll('.process-step').forEach((step, i) => {
+        gsap.fromTo(step,
+          { x: -60, opacity: 0, filter: 'blur(4px)' },
+          { x: 0, opacity: 1, filter: 'blur(0px)', duration: 1.2, ease: 'expo.out',
+            delay: i * 0.08,
+            scrollTrigger: { trigger: step, start: 'top 85%' } }
+        );
+      });
 
       // Timeline line grows with scroll
       gsap.fromTo('.process-line-fill',
         { scaleY: 0 },
         {
           scaleY: 1, ease: 'none',
-          scrollTrigger: { trigger: '.process-steps', start: 'top 70%', end: 'bottom 40%', scrub: 1 },
+          scrollTrigger: { trigger: '.process-steps', start: 'top 70%', end: 'bottom 40%', scrub: 0.8 },
         }
       );
 
@@ -47,9 +50,18 @@ export default function Process() {
         { top: '0%' },
         {
           top: '100%', ease: 'none',
-          scrollTrigger: { trigger: '.process-steps', start: 'top 70%', end: 'bottom 40%', scrub: 1 },
+          scrollTrigger: { trigger: '.process-steps', start: 'top 70%', end: 'bottom 40%', scrub: 0.8 },
         }
       );
+
+      // Step dots pulse as they become active
+      document.querySelectorAll('.process-dot').forEach((dot, i) => {
+        gsap.fromTo(dot,
+          { scale: 0.5, opacity: 0.5 },
+          { scale: 1.2, opacity: 1, duration: 0.6, ease: 'back.out(3)',
+            scrollTrigger: { trigger: dot, start: 'top 70%' } }
+        );
+      });
     }, sectionRef.current);
 
     return () => ctx.revert();
@@ -81,7 +93,7 @@ export default function Process() {
               <div key={step.number} className="process-step group relative flex items-start gap-6 lg:gap-10">
                 {/* Number dot */}
                 <div className="relative z-10 -ml-8 lg:-ml-16 flex-shrink-0 w-[22px] h-[22px] lg:w-[26px] lg:h-[26px] rounded-full border-2 border-[var(--border-medium)] bg-[var(--surface-alt)] flex items-center justify-center group-hover:border-[var(--brand)] group-hover:shadow-[0_0_20px_rgba(196,164,78,0.3)] transition-all duration-500">
-                  <div className="w-2 h-2 rounded-full bg-[var(--ink-muted)] group-hover:bg-[var(--brand)] transition-colors duration-500" />
+                  <div className="process-dot w-2 h-2 rounded-full bg-[var(--ink-muted)] group-hover:bg-[var(--brand)] transition-colors duration-500" />
                 </div>
 
                 {/* Content */}

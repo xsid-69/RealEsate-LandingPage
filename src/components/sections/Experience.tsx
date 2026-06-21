@@ -15,33 +15,54 @@ export default function Experience() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const ctx = gsap.context(() => {
-      // Image reveal with clip-path + rotation
+      // Image reveal with dramatic wipe + rotation
       gsap.fromTo('.exp-image',
-        { clipPath: 'inset(20% 0 20% 0)', scale: 1.15, rotate: 2 },
+        { clipPath: 'inset(100% 0 0% 0)', scale: 1.2, rotate: 3 },
         {
           clipPath: 'inset(0% 0 0% 0)', scale: 1, rotate: 0,
-          duration: 1.8, ease: 'power3.inOut',
-          scrollTrigger: { trigger: '.exp-image', start: 'top 80%', end: 'bottom 50%', toggleActions: 'play none none none' },
+          duration: 2, ease: 'power4.inOut',
+          scrollTrigger: { trigger: '.exp-image', start: 'top 85%', toggleActions: 'play none none none' },
         }
       );
 
-      // Right content stagger
+      // Image parallax on scroll
+      gsap.to('.exp-image img', {
+        yPercent: 15,
+        ease: 'none',
+        scrollTrigger: { trigger: '.exp-image', start: 'top bottom', end: 'bottom top', scrub: 0.5 },
+      });
+
+      // Corner accents scale in
+      gsap.fromTo('.exp-corner',
+        { scale: 0, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.8, ease: 'back.out(2)', stagger: 0.15,
+          scrollTrigger: { trigger: '.exp-image', start: 'top 60%' } }
+      );
+
+      // Right content stagger with slide from right
       gsap.fromTo('.exp-content > *',
-        { y: 60, opacity: 0 },
+        { x: 60, opacity: 0, filter: 'blur(6px)' },
         {
-          y: 0, opacity: 1, stagger: 0.12, duration: 1, ease: 'expo.out',
+          x: 0, opacity: 1, filter: 'blur(0px)', stagger: 0.1, duration: 1.2, ease: 'expo.out',
           scrollTrigger: { trigger: '.exp-content', start: 'top 75%' },
         }
       );
 
-      // Stats cards entrance
+      // Stats cards entrance with spring bounce
       gsap.fromTo('.stat-card',
-        { y: 40, opacity: 0, scale: 0.92 },
+        { y: 60, opacity: 0, scale: 0.85, rotateY: -15 },
         {
-          y: 0, opacity: 1, scale: 1, stagger: 0.15, duration: 0.9, ease: 'back.out(1.4)',
-          scrollTrigger: { trigger: '.stats-grid', start: 'top 80%' },
+          y: 0, opacity: 1, scale: 1, rotateY: 0, stagger: 0.12, duration: 1.1, ease: 'back.out(1.7)',
+          scrollTrigger: { trigger: '.stats-grid', start: 'top 82%' },
         }
       );
+
+      // Section parallax background shift
+      gsap.to(sectionRef.current, {
+        backgroundPositionY: '30%',
+        ease: 'none',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top bottom', end: 'bottom top', scrub: true },
+      });
     }, sectionRef.current);
 
     return () => ctx.revert();
@@ -64,8 +85,8 @@ export default function Experience() {
             <div className="absolute inset-3 border border-white/0 group-hover:border-white/20 transition-all duration-700 pointer-events-none rounded-sm" />
           </div>
           {/* Corner accents */}
-          <div className="absolute -top-3 -left-3 w-12 h-12 border-t border-l border-[var(--brand-light)]/0 group-hover:border-[var(--brand-light)]/60 transition-all duration-700 delay-100" />
-          <div className="absolute -bottom-3 -right-3 w-12 h-12 border-b border-r border-[var(--brand-light)]/0 group-hover:border-[var(--brand-light)]/60 transition-all duration-700 delay-100" />
+          <div className="exp-corner absolute -top-3 -left-3 w-12 h-12 border-t border-l border-[var(--brand-light)]/0 group-hover:border-[var(--brand-light)]/60 transition-all duration-700 delay-100" />
+          <div className="exp-corner absolute -bottom-3 -right-3 w-12 h-12 border-b border-r border-[var(--brand-light)]/0 group-hover:border-[var(--brand-light)]/60 transition-all duration-700 delay-100" />
         </div>
 
         {/* Content */}

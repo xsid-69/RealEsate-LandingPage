@@ -15,16 +15,37 @@ export default function Contact() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const ctx = gsap.context(() => {
+      // Left content slides in from left with blur
       gsap.fromTo('.contact-left > *',
-        { y: 50, opacity: 0 },
-        { y: 0, opacity: 1, stagger: 0.1, duration: 1, ease: 'expo.out',
-          scrollTrigger: { trigger: '.contact-left', start: 'top 75%' } }
+        { x: -50, opacity: 0, filter: 'blur(6px)' },
+        { x: 0, opacity: 1, filter: 'blur(0px)', stagger: 0.08, duration: 1.2, ease: 'expo.out',
+          scrollTrigger: { trigger: '.contact-left', start: 'top 78%' } }
       );
 
+      // Form slides in from right with scale
       gsap.fromTo('.contact-form',
-        { y: 80, opacity: 0, scale: 0.97 },
-        { scale: 1, y: 0, opacity: 1, duration: 1.3, ease: 'expo.out',
-          scrollTrigger: { trigger: '.contact-form', start: 'top 80%' } }
+        { x: 60, opacity: 0, scale: 0.95, filter: 'blur(8px)' },
+        { x: 0, scale: 1, opacity: 1, filter: 'blur(0px)', duration: 1.5, ease: 'expo.out',
+          scrollTrigger: { trigger: '.contact-form', start: 'top 82%' } }
+      );
+
+      // Form inputs stagger in
+      gsap.fromTo('.contact-form input, .contact-form select, .contact-form textarea',
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, stagger: 0.06, duration: 0.8, ease: 'power3.out',
+          scrollTrigger: { trigger: '.contact-form', start: 'top 75%' } }
+      );
+
+      // Decorative blobs float
+      gsap.to('.contact-blob', {
+        y: -30, duration: 6, ease: 'sine.inOut', repeat: -1, yoyo: true,
+      });
+
+      // Contact info items slide in
+      gsap.fromTo('.contact-info-item',
+        { x: -30, opacity: 0 },
+        { x: 0, opacity: 1, stagger: 0.12, duration: 1, ease: 'expo.out',
+          scrollTrigger: { trigger: '.contact-left', start: 'top 65%' } }
       );
     }, sectionRef.current);
 
@@ -53,8 +74,8 @@ export default function Contact() {
   return (
     <section id="contact" ref={sectionRef} className="py-28 lg:py-40 px-6 lg:px-16 bg-[var(--surface)] relative overflow-hidden">
       {/* Decorative blobs */}
-      <div className="absolute top-20 -right-32 w-64 h-64 rounded-full bg-[var(--brand)]/[0.03] blur-3xl" />
-      <div className="absolute bottom-20 -left-32 w-64 h-64 rounded-full bg-[var(--brand)]/[0.02] blur-3xl" />
+      <div className="contact-blob absolute top-20 -right-32 w-64 h-64 rounded-full bg-[var(--brand)]/[0.03] blur-3xl" />
+      <div className="contact-blob absolute bottom-20 -left-32 w-64 h-64 rounded-full bg-[var(--brand)]/[0.02] blur-3xl" />
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 relative z-10">
         {/* Left */}
@@ -78,7 +99,7 @@ export default function Contact() {
               <a
                 key={idx}
                 href={item.href}
-                className="group/contact flex items-center gap-4 p-3 -ml-3 rounded-sm hover:bg-[var(--surface-alt)] transition-all duration-400"
+                className="contact-info-item group/contact flex items-center gap-4 p-3 -ml-3 rounded-sm hover:bg-[var(--surface-alt)] transition-all duration-400"
               >
                 <div className="w-11 h-11 rounded-sm bg-[var(--surface-alt)] border border-[var(--border-subtle)] flex items-center justify-center text-[var(--ink-muted)] group-hover/contact:border-[var(--brand)]/30 group-hover/contact:text-[var(--brand)] group-hover/contact:scale-105 transition-all duration-400">
                   {item.icon}

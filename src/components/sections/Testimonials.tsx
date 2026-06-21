@@ -40,24 +40,38 @@ export default function Testimonials() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const ctx = gsap.context(() => {
+      // Header with blur reveal
       gsap.fromTo('.test-header > *',
-        { y: 40, opacity: 0 },
-        { y: 0, opacity: 1, stagger: 0.1, duration: 1, ease: 'expo.out',
-          scrollTrigger: { trigger: '.test-header', start: 'top 80%' } }
+        { y: 50, opacity: 0, filter: 'blur(6px)' },
+        { y: 0, opacity: 1, filter: 'blur(0px)', stagger: 0.1, duration: 1.2, ease: 'expo.out',
+          scrollTrigger: { trigger: '.test-header', start: 'top 82%' } }
       );
 
-      gsap.fromTo('.test-card',
-        { y: 80, opacity: 0 },
-        { y: 0, opacity: 1, stagger: 0.15, duration: 1.2, ease: 'expo.out',
-          scrollTrigger: { trigger: '.test-grid', start: 'top 80%' } }
-      );
+      // Cards cascade in with 3D rotation
+      document.querySelectorAll('.test-card').forEach((card, i) => {
+        gsap.fromTo(card,
+          { y: 100, opacity: 0, rotateX: 12, scale: 0.9 },
+          { y: 0, opacity: 1, rotateX: 0, scale: 1, duration: 1.3, ease: 'expo.out',
+            delay: i * 0.1,
+            scrollTrigger: { trigger: card, start: 'top 88%' } }
+        );
+      });
 
-      // Quote marks bounce in
+      // Quote marks bounce in with spring
       gsap.fromTo('.quote-mark',
-        { scale: 0, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 0.8, ease: 'back.out(3)', stagger: 0.2,
-          scrollTrigger: { trigger: '.test-grid', start: 'top 70%' } }
+        { scale: 0, opacity: 0, rotate: -20 },
+        { scale: 1, opacity: 1, rotate: 0, duration: 1, ease: 'elastic.out(1, 0.5)', stagger: 0.2,
+          scrollTrigger: { trigger: '.test-grid', start: 'top 72%' } }
       );
+
+      // Parallax offset on middle card
+      const middleCard = document.querySelectorAll('.test-card')[1];
+      if (middleCard) {
+        gsap.to(middleCard, {
+          yPercent: -8, ease: 'none',
+          scrollTrigger: { trigger: '.test-grid', start: 'top bottom', end: 'bottom top', scrub: 0.5 },
+        });
+      }
     }, sectionRef.current);
 
     return () => ctx.revert();
