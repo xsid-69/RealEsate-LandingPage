@@ -6,25 +6,28 @@ import { gsap } from '@/lib/gsap-init';
 export default function Cursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
   const followerRef = useRef<HTMLDivElement>(null);
-  const [hidden, setHidden] = useState(false);
+  const [hidden, setHidden] = useState(true);
   const [hovering, setHovering] = useState(false);
   const [clicking, setClicking] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
     if (window.innerWidth < 1024 || window.matchMedia('(pointer: coarse)').matches) return;
-    setMounted(true);
+    setIsDesktop(true);
+  }, []);
 
+  useEffect(() => {
+    if (!isDesktop) return;
     const cursor = cursorRef.current;
     const follower = followerRef.current;
     if (!cursor || !follower) return;
 
     const onMove = (e: MouseEvent) => {
-      gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.12, ease: 'power2.out' });
-      gsap.to(follower, { x: e.clientX, y: e.clientY, duration: 0.55, ease: 'power3.out' });
+      setHidden(false);
+      gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1, ease: 'power2.out', overwrite: true });
+      gsap.to(follower, { x: e.clientX, y: e.clientY, duration: 0.5, ease: 'power3.out', overwrite: true });
     };
 
-    const onEnter = () => setHidden(false);
     const onLeave = () => setHidden(true);
     const onDown = () => setClicking(true);
     const onUp = () => setClicking(false);
@@ -32,12 +35,11 @@ export default function Cursor() {
     const onHoverOut = () => setHovering(false);
 
     document.addEventListener('mousemove', onMove, { passive: true });
-    document.addEventListener('mouseenter', onEnter);
     document.addEventListener('mouseleave', onLeave);
     document.addEventListener('mousedown', onDown);
     document.addEventListener('mouseup', onUp);
 
-    const observer = new MutationObserver(() => {
+    const attachHovers = () => {
       const targets = document.querySelectorAll('a, button, [role="button"], select, .cursor-hover, input, textarea');
       targets.forEach((el) => {
         el.removeEventListener('mouseenter', onHoverIn);
@@ -45,27 +47,22 @@ export default function Cursor() {
         el.addEventListener('mouseenter', onHoverIn);
         el.addEventListener('mouseleave', onHoverOut);
       });
-    });
+    };
 
+    attachHovers();
+    const observer = new MutationObserver(attachHovers);
     observer.observe(document.body, { childList: true, subtree: true });
-
-    const targets = document.querySelectorAll('a, button, [role="button"], select, .cursor-hover, input, textarea');
-    targets.forEach((el) => {
-      el.addEventListener('mouseenter', onHoverIn);
-      el.addEventListener('mouseleave', onHoverOut);
-    });
 
     return () => {
       observer.disconnect();
       document.removeEventListener('mousemove', onMove);
-      document.removeEventListener('mouseenter', onEnter);
       document.removeEventListener('mouseleave', onLeave);
       document.removeEventListener('mousedown', onDown);
       document.removeEventListener('mouseup', onUp);
     };
-  }, []);
+  }, [isDesktop]);
 
-  if (!mounted) return null;
+  if (!isDesktop) return null;
 
   return (
     <>
@@ -76,7 +73,7 @@ export default function Cursor() {
         aria-hidden="true"
       >
         <div
-          className="rounded-full bg-white -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ease-out"
+          className="rounded-full bg-white -translate-x-1/2 -translate-y-1/2 transition-all duration-200 ease-out"
           style={{
             width: hovering ? '10px' : clicking ? '4px' : '6px',
             height: hovering ? '10px' : clicking ? '4px' : '6px',
@@ -90,7 +87,7 @@ export default function Cursor() {
         aria-hidden="true"
       >
         <div
-          className="rounded-full border -translate-x-1/2 -translate-y-1/2 transition-all duration-500 ease-expo-out"
+          className="rounded-full border -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ease-out"
           style={{
             width: hovering ? '56px' : clicking ? '26px' : '38px',
             height: hovering ? '56px' : clicking ? '26px' : '38px',
