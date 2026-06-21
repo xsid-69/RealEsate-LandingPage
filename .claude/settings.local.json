@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "PowerShell(Copy-Item \"E:\\\\FREELANCED PROJECTS\\\\RealEsate-site\\\\app\\\\public\\\\images\" \"E:\\\\FREELANCED PROJECTS\\\\RealEsate-site\\\\public\\\\images\" -Recurse -Force)",
-      "PowerShell(Copy-Item \"E:\\\\FREELANCED PROJECTS\\\\RealEsate-site\\\\app\\\\public\\\\videos\" \"E:\\\\FREELANCED PROJECTS\\\\RealEsate-site\\\\public\\\\videos\" -Recurse -Force)"
+      "PowerShell(Copy-Item \"E:\\\\FREELANCED PROJECTS\\\\RealEsate-site\\\\app\\\\public\\\\videos\" \"E:\\\\FREELANCED PROJECTS\\\\RealEsate-site\\\\public\\\\videos\" -Recurse -Force)",
+      "PowerShell(Set-Location \"E:\\\\FREELANCED PROJECTS\\\\RealEsate-site\"; Test-Path \"app\"; Get-ChildItem -Name -ErrorAction SilentlyContinue | Where-Object { $_ -eq \"app\" })",
+      "PowerShell(cmd /c \"rmdir /s /q `\"E:\\\\FREELANCED PROJECTS\\\\RealEsate-site\\\\app`\"\")"
     ]
   }
 }
