@@ -111,32 +111,6 @@ src/
 
 ---
 
-## 🚀 Getting Started
-
-```bash
-# Clone the repository
-git clone https://github.com/xsid-69/RealEsate-LandingPage.git
-
-# Navigate to project
-cd RealEsate-LandingPage
-
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-
-# Build for production
-npm run build
-
-# Start production server
-npm start
-```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
----
-
 ## 📊 Lighthouse Scores
 
 | Metric | Score |
