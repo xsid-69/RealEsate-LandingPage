@@ -2,12 +2,10 @@
 
 import { useEffect, useRef } from 'react';
 import { gsap, ScrollTrigger } from '@/lib/gsap-init';
-import Image from 'next/image';
 import MagneticButton from '@/components/ui/MagneticButton';
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const badgeRef = useRef<HTMLDivElement>(null);
 
@@ -16,44 +14,37 @@ export default function Hero() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const ctx = gsap.context(() => {
-      // Orchestrated entrance sequence
       const tl = gsap.timeline({ delay: 0.2 });
 
-      // Image scales in
-      tl.fromTo('.hero-image-wrapper',
-        { scale: 1.2, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 1.8, ease: 'expo.out' }
+      tl.fromTo('.hero-video-wrapper',
+        { scale: 1.15, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 2, ease: 'expo.out' }
       );
 
-      // Title lines reveal (word by word)
       tl.fromTo('.hero-title-line span',
         { y: '110%', rotateX: -80 },
         { y: '0%', rotateX: 0, duration: 1.4, ease: 'expo.out', stagger: 0.06 },
-        '-=1.2'
+        '-=1.4'
       );
 
-      // Subtitle fades
       tl.fromTo('.hero-subtitle',
         { y: 30, opacity: 0 },
         { y: 0, opacity: 1, duration: 1, ease: 'power3.out' },
         '-=0.8'
       );
 
-      // Badge slides in
       tl.fromTo('.hero-badge',
         { y: 20, opacity: 0, scale: 0.9 },
         { y: 0, opacity: 1, scale: 1, duration: 0.8, ease: 'back.out(1.7)' },
         '-=0.5'
       );
 
-      // Search bar rises
       tl.fromTo('.hero-search',
         { y: 40, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' },
         '-=0.4'
       );
 
-      // Scroll indicator
       tl.fromTo('.hero-scroll-hint',
         { opacity: 0 },
         { opacity: 1, duration: 0.6 },
@@ -68,21 +59,11 @@ export default function Hero() {
         scrub: true,
         onUpdate: (self) => {
           const p = self.progress;
-          gsap.set('.hero-image-wrapper', { yPercent: p * 20 });
+          gsap.set('.hero-video-wrapper', { yPercent: p * 15 });
           gsap.set(contentRef.current, { yPercent: -p * 40, opacity: 1 - p * 1.5 });
           gsap.set(badgeRef.current, { yPercent: -p * 30 });
         },
       });
-
-      // Mouse-follow parallax on image (desktop only)
-      if (window.innerWidth >= 1024) {
-        const onMouse = (e: MouseEvent) => {
-          const x = (e.clientX / window.innerWidth - 0.5) * 20;
-          const y = (e.clientY / window.innerHeight - 0.5) * 12;
-          gsap.to('.hero-image-wrapper img', { x, y, duration: 1.5, ease: 'power2.out' });
-        };
-        sectionRef.current?.addEventListener('mousemove', onMouse);
-      }
     }, sectionRef.current);
 
     return () => ctx.revert();
@@ -99,20 +80,21 @@ export default function Hero() {
 
   return (
     <section id="hero" ref={sectionRef} className="relative h-screen min-h-[700px] overflow-hidden">
-      {/* Background Image */}
-      <div className="hero-image-wrapper absolute inset-0">
-        <Image
-          src="/images/property-1.jpg"
-          alt="Luxury modern villa in Pune with floor-to-ceiling windows"
-          fill
-          priority
-          className="object-cover"
-          sizes="100vw"
-          quality={90}
-        />
+      {/* Background Video */}
+      <div className="hero-video-wrapper absolute inset-0">
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+          poster="/images/property-1.jpg"
+        >
+          <source src="/videos/living-room.mp4" type="video/mp4" />
+        </video>
         {/* Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/70" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/25 to-black/75" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-transparent" />
       </div>
 
       {/* Content */}
@@ -133,36 +115,37 @@ export default function Hero() {
         {/* Title */}
         <h1 className="hero-title text-white font-cinzel leading-[0.95] tracking-tight mb-6">
           <span className="hero-title-line block text-[clamp(40px,8vw,90px)] overflow-hidden">
-            {splitWords('Find Your')}
+            {splitWords('Nestara')}
           </span>
-          <span className="hero-title-line block text-[clamp(40px,8vw,90px)] overflow-hidden">
-            {splitWords('Dream Home')}
+          <span className="hero-title-line block text-[clamp(40px,8vw,90px)] overflow-hidden text-white/40">
+            {splitWords('Home')}
           </span>
         </h1>
 
         {/* Subtitle */}
-        <p className="hero-subtitle text-white/50 text-[clamp(14px,1.5vw,18px)] max-w-lg leading-relaxed font-body mb-10">
-          Premium real estate advisory in Pune. Curated homes in
-          Koregaon Park, Kalyani Nagar, and Baner.
+        <p className="hero-subtitle text-white/50 text-[clamp(13px,1.4vw,16px)] max-w-md leading-relaxed font-body mb-10 tracking-wide uppercase">
+          & Realty, Pune
         </p>
 
         {/* Search Bar - hidden on mobile */}
         <div className="hero-search hidden md:block">
-          <form role="search" aria-label="Property search" className="flex items-center bg-white/[0.06] backdrop-blur-xl border border-white/[0.08] rounded-sm overflow-hidden max-w-2xl hover:bg-white/[0.09] hover:border-white/[0.12] transition-all duration-500">
-            <div className="flex-1 flex items-center gap-4 px-6 py-4">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" className="opacity-40 flex-shrink-0" aria-hidden="true">
-                <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
-              </svg>
-              <label htmlFor="hero-search" className="sr-only">Search properties</label>
-              <input
-                id="hero-search"
-                type="text"
-                placeholder="Search by locality, project, or builder..."
-                className="bg-transparent text-white placeholder-white/30 text-[14px] font-body w-full outline-none"
-              />
+          <form role="search" aria-label="Property search" className="flex items-stretch bg-white/[0.05] backdrop-blur-xl border border-white/[0.08] rounded-sm overflow-hidden max-w-3xl">
+            <div className="flex-1 grid grid-cols-3 divide-x divide-white/[0.06]">
+              <div className="px-6 py-5">
+                <span className="text-white/40 text-[10px] uppercase tracking-[2px] font-body block mb-1">Location</span>
+                <span className="text-white text-[14px] font-body">All Pune</span>
+              </div>
+              <div className="px-6 py-5">
+                <span className="text-white/40 text-[10px] uppercase tracking-[2px] font-body block mb-1">Property Type</span>
+                <span className="text-white text-[14px] font-body">All Types</span>
+              </div>
+              <div className="px-6 py-5">
+                <span className="text-white/40 text-[10px] uppercase tracking-[2px] font-body block mb-1">Budget</span>
+                <span className="text-white text-[14px] font-body">Any Budget</span>
+              </div>
             </div>
             <MagneticButton strength={0.2}>
-              <button type="submit" className="bg-[var(--brand)] hover:bg-[var(--brand-light)] text-white px-7 py-4 text-[11px] uppercase tracking-[2px] font-medium font-body transition-all duration-400 hover:shadow-[0_0_30px_rgba(196,164,78,0.3)]" aria-label="Search properties">
+              <button type="submit" className="bg-[var(--brand)] hover:bg-[var(--brand-light)] text-white px-8 text-[11px] uppercase tracking-[2.5px] font-semibold font-body transition-all duration-400 hover:shadow-[0_0_30px_rgba(196,164,78,0.3)] h-full" aria-label="Search properties">
                 Search
               </button>
             </MagneticButton>
