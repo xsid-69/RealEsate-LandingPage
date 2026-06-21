@@ -20,7 +20,7 @@
 
 <div align="center">
 
-![Nestara Realty — Hero Section](https://in.pinterest.com/pin/959407526887799278/)
+![Nestara Realty — Hero Section](https://i.pinimg.com/736x/89/d4/0f/89d40f4e3679957ac7d648ce4bb1f2cf.jpg)
 
 </div>
 
