@@ -27,6 +27,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${cinzel.variable} ${hankenGrotesk.variable} dark`} suppressHydrationWarning>
       <head>
+        <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+        <link rel="apple-touch-icon" href="/apple-icon.svg" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
