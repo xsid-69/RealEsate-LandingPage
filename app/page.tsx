@@ -11,6 +11,7 @@ import SmoothScroll from '@/components/effects/SmoothScroll';
 import Chatbot from '@/components/ui/Chatbot';
 
 const Experience = dynamic(() => import('@/components/sections/Experience'));
+const About = dynamic(() => import('@/components/sections/About'));
 const Properties = dynamic(() => import('@/components/sections/Properties'));
 const Neighbourhoods = dynamic(() => import('@/components/sections/Neighbourhoods'));
 const Process = dynamic(() => import('@/components/sections/Process'));
@@ -37,6 +38,7 @@ export default function HomePage() {
             <main className="overflow-x-hidden w-full max-w-full">
               <Navigation />
               <Hero />
+              <About />
               <Experience />
               <Properties />
               <Neighbourhoods />
