@@ -10,7 +10,7 @@
 
 **A premium, high-converting real estate landing page built for Nestara Realty, Pune.**
 
-[🌐 Live Demo](https://realesate-landing-page.vercel.app) • [📱 Contact Developer](#-hire-me)
+[🌐 Live Demo](https://real-esate-landing-page.vercel.app/) • [📱 Contact Developer](https://wa.me/9356851770)
 
 </div>
 
