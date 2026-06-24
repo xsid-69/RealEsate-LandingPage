@@ -12,7 +12,6 @@ export default function Hero() {
 
   useEffect(() => {
     if (!sectionRef.current) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ delay: 0.3 });

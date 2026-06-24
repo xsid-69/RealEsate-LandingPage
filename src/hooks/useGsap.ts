@@ -8,7 +8,6 @@ export function useGsap(callback: (ctx: gsap.Context) => void, deps: unknown[] =
 
   useEffect(() => {
     if (!ref.current) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const ctx = gsap.context(() => {
       callback(ctx!);

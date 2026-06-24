@@ -19,7 +19,6 @@ export default function Awards() {
 
   useEffect(() => {
     if (!sectionRef.current) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const ctx = gsap.context(() => {
       // Header with blur reveal

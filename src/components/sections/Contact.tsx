@@ -12,7 +12,6 @@ export default function Contact() {
 
   useEffect(() => {
     if (!sectionRef.current) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const ctx = gsap.context(() => {
       // Left content slides in from left with blur

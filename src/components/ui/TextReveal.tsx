@@ -28,7 +28,6 @@ export default function TextReveal({
 
   useEffect(() => {
     if (!containerRef.current) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const el = containerRef.current;
     const text = children;

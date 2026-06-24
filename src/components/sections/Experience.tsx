@@ -12,7 +12,6 @@ export default function Experience() {
 
   useEffect(() => {
     if (!sectionRef.current) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const ctx = gsap.context(() => {
       // Image reveal with dramatic wipe + rotation

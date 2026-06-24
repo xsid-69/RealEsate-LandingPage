@@ -17,10 +17,6 @@ export default function CountUp({ target, suffix = '', prefix = '', duration = 2
 
   useEffect(() => {
     if (!ref.current || hasAnimated) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      ref.current.textContent = `${prefix}${target}${suffix}`;
-      return;
-    }
 
     const obj = { val: 0 };
 
